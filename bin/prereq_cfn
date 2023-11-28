@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Set the paths
+CFN_TEMPLATE_PATH="../cfn/serverlessDataLake.json"
+STACK_NAME="serverless-data-lake" 
+
+# Deploy the CloudFormation template
+aws cloudformation deploy --template-file "$CFN_TEMPLATE_PATH" --stack-name "$STACK_NAME" --capabilities CAPABILITY_NAMED_IAM
+
+# Check the deployment status
+if [ $? -eq 0 ]; then
+    echo "CloudFormation stack deployment successful."
+else
+    echo "CloudFormation stack deployment failed."
+fi
