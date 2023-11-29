@@ -42,3 +42,45 @@ resource "aws_s3_bucket_versioning" "versioning_my_serverless" {
     status = "Enabled"
   }
 }
+
+resource "aws_iam_role" "my_firehose_role" {
+  name = "SDL-FirehoseRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Sid       = "",
+        Effect    = "Allow",
+        Principal = {
+          Service = "firehose.amazonaws.com"
+        },
+        Action = "sts:AssumeRole",
+        Condition = {
+          StringEquals = {
+            "sts:ExternalId" = var.aws_account_id
+          }
+        }
+      }
+    ]
+  })
+
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
+  ]
+}
+
+resource "aws_kinesis_firehose_delivery_stream" "my_firehose_stream" {
+  name        = "sdl-firehose-stream"
+  destination = "s3"
+
+  s3_configuration {
+    role_arn                = aws_iam_role.my_firehose_role.arn
+    bucket_arn              = aws_s3_bucket.my_serverless.arn
+    buffer_size             = 1
+    buffer_interval         = 60
+    compression_format      = "GZIP"
+    error_output_prefix     = "error/"
+    prefix                  = "raw/year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/hour=!{timestamp:HH}/"
+  }
+}
