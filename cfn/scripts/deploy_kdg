@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Set your AWS region
+AWS_REGION="eu-west-1"
+
+# Set your CloudFormation stack name
+STACK_NAME="Kinesis-Data-Generator-Cognito"
+
+# Set the path to your CloudFormation template file
+TEMPLATE_FILE="../templates/kdg-cognito-setup.json"
+
+# Set parameter values
+USERNAME="John"
+PASSWORD="Doe"
+
+# AWS CLI command to deploy CloudFormation stack
+aws cloudformation deploy \
+  --region $AWS_REGION \
+  --stack-name $STACK_NAME \
+  --template-file $TEMPLATE_FILE \
+  --parameter-overrides Username=$USERNAME Password=$PASSWORD \
+  --capabilities CAPABILITY_IAM
+
+# Check the status of the stack deployment
+aws cloudformation wait stack-create-complete --region $AWS_REGION --stack-name $STACK_NAME
+
+# Get the URL of the Kinesis Data Generator
+KDG_URL=$(aws cloudformation describe-stacks --region $AWS_REGION --stack-name $STACK_NAME --query "Stacks[0].Outputs[0].OutputValue" --output text)
+
+echo "Stack deployed successfully!"
+echo "Kinesis Data Generator URL: $KDG_URL"
