@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Set the paths
-CFN_TEMPLATE_PATH="../cfn/serverlessDataLake.json"
+CFN_TEMPLATE_PATH="../templates/serverlessDataLake.json"
 STACK_NAME="serverless-data-lake" 
 
 # Deploy the CloudFormation template
