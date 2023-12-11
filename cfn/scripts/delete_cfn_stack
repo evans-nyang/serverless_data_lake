@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Usage: ./delete_stack.sh <stack_name>
+
+STACK_NAME=$1
+
+# Check if the stack name is provided
+if [ -z "$STACK_NAME" ]; then
+    echo "Usage: $0 <stack_name>"
+    exit 1
+fi
+
+echo "Deleting CloudFormation stack: $STACK_NAME"
+
+# Delete the CloudFormation stack
+aws cloudformation delete-stack --stack-name "$STACK_NAME"
+
+# Check the deletion status
+if [ $? -eq 0 ]; then
+    echo "CloudFormation stack deletion initiated successfully."
+else
+    echo "CloudFormation stack deletion failed. Check the AWS CLI error message for more details."
+    exit 1
+fi
+
+# Wait for the stack deletion to complete
+aws cloudformation wait stack-delete-complete --stack-name "$STACK_NAME"
+
+# Check the final deletion status
+if [ $? -eq 0 ]; then
+    echo "CloudFormation stack deletion completed successfully."
+else
+    echo "CloudFormation stack deletion failed. Check the AWS CLI error message for more details."
+    exit 1
+fi
