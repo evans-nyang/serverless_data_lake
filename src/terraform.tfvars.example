@@ -1,0 +1,7 @@
+aws_account_id       = "123456789012"
+bucket_name          = "sdl-immersion-day-691748627789"
+region               = "eu-west-1"
+environment          = "dev"
+firehose_stream_name = "sdl-firehose-stream"
+database_name        = "sdl-database"
+crawler_name         = "sdl-crawler"
