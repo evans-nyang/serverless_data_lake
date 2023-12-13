@@ -17,7 +17,7 @@ resource "aws_glue_crawler" "sdl_glue_crawler" {
 }
 
 resource "aws_glue_job" "transform_json_to_parquet" {
-  name     = "transform-json-to-parquet"
+  name     = var.glue_job_name
   role_arn = data.aws_iam_role.sdl_glue_role.arn
   command {
     name            = "glueetl"
@@ -33,6 +33,20 @@ resource "aws_glue_job" "transform_json_to_parquet" {
   }
 
   default_arguments = {
-    "--job-language" = "python"
+    "--job-language"  = "python"
+    "--output-path"   = "s3://sdl-immersion-day-${var.aws_account_id}/compressed-parquet/"
+    "--database_name" = "${var.database_name}"
+    "--table_name"    = "${var.table_name}"
+    "--bucket-name"   = "${var.bucket_name}"
+  }
+}
+
+resource "aws_glue_trigger" "etl_trigger" {
+  name     = var.trigger_name
+  schedule = "cron(0 0 * * ? *)" # Set to run daily at midnight
+  type     = "SCHEDULED"
+
+  actions {
+    job_name = aws_glue_job.transform_json_to_parquet.name
   }
 }

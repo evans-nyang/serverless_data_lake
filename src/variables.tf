@@ -32,7 +32,22 @@ variable "database_name" {
   type        = string
 }
 
+variable "table_name" {
+  description = "Name of table in glue crawler database"
+  type        = string
+}
+
 variable "crawler_name" {
   description = "Name of glue crawler"
+  type        = string
+}
+
+variable "glue_job_name" {
+  description = "Name of the glue job"
+  type        = string
+}
+
+variable "trigger_name" {
+  description = "Name of etl trigger"
   type        = string
 }
