@@ -54,8 +54,6 @@ mapped_data = ApplyMapping.apply(frame = datasource0, mappings = [
     ("hour", "string", "hour", "string")  
 ])
 
-# Drop color field
-# transformed_data = DropFields.apply(frame = mapped_data, paths = ["color"])
 """
 
 # Generate the ETL script
