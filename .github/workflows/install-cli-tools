@@ -1,0 +1,29 @@
+name: Install CLI Tools
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  install-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install AWS CLI
+        run: |
+          cd ./bin
+          source ./install_aws_cli
+
+      - name: Install Terraform CLI
+        run: |
+          cd ./bin
+          source ./install_terraform_cli
+          source ./set_tf_alias
+
+      - name: Verify installation
+        run: |
+          aws --version
+          tf --version
