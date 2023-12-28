@@ -22,20 +22,16 @@ datasource0 = glueContext.create_dynamic_frame.from_catalog(
 # Perform transformations using DynamicFrames
 dsTransformed = datasource0.drop_fields(['color', 'hour']).rename_field('imageUrl', 'thumbnailImageUrl').rename_field('campaign', 'campaignType')
 
-# Print schema and show samples
-dsTransformed.printSchema()
-dsTransformed.show(10)
-
 # Write transformed data to S3
 glueContext.write_dynamic_frame.from_options(
     frame=dsTransformed,
     connection_type="s3",
-    connection_options={"path": f"s3://sdl-immersion-day-{account_number}/output-etl-nb-jobs"},
+    connection_options={"path": f"s3://sdl-immersion-day-{account_number}/output-etl-jobs"},
     format="parquet"
 )
 
 # Write parquet data partitioned by department
 dsTransformed.write.parquet(
-    f's3://sdl-immersion-day-{account_number}/output-etl-nb-jobs/byDepartment',
+    f's3://sdl-immersion-day-{account_number}/output-etl-jobs/byDepartment',
     partitionBy=['department']
 )
