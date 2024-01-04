@@ -51,3 +51,18 @@ variable "trigger_name" {
   description = "Name of etl trigger"
   type        = string
 }
+
+variable "function_name" {
+  description = "Name of lambda handler"
+  type        = string
+}
+
+variable "execution_role" {
+  description = "The name of lambda execcution role"
+  type        = string
+}
+
+variable "filepath" {
+  description = "The path of the lambda executable script"
+  type        = string
+}
