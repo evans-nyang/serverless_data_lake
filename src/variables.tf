@@ -66,3 +66,13 @@ variable "filepath" {
   description = "The path of the lambda executable script"
   type        = string
 }
+
+variable "athena_workgroup" {
+  description = "Athena workgroup name"
+  type        = string
+}
+
+variable "athena_data_catalog" {
+  description = "Athena Glue based data catalog name"
+  type        = string
+}
