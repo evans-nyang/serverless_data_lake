@@ -14,6 +14,14 @@ resource "aws_athena_data_catalog" "glue-data-catalog" {
   type        = "GLUE"
 
   parameters = {
-    "catalog-id" = "123456789012"
+    "catalog-id" = var.aws_account_id
   }
+}
+
+resource "aws_athena_named_query" "sdl_named_query" {
+  name        = var.athena_named_query
+  workgroup   = aws_athena_workgroup.workgroup.id
+  database    = var.database_name
+  description = "sdl athena named query"
+  query       = file(var.query_location)
 }

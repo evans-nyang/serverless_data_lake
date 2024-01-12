@@ -76,3 +76,13 @@ variable "athena_data_catalog" {
   description = "Athena Glue based data catalog name"
   type        = string
 }
+
+variable "athena_named_query" {
+  description = "Athena named query name"
+  type        = string
+}
+
+variable "query_location" {
+  description = "Athena named query location"
+  type        = string
+}
