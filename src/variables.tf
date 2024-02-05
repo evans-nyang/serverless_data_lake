@@ -22,11 +22,13 @@ variable "aws_account_id" {
   type        = string
 }
 
+# AWS Kinesis 
 variable "firehose_stream_name" {
   description = "Name of kinesis firehose data stream"
   type        = string
 }
 
+# AWS Glue 
 variable "database_name" {
   description = "Name of glue crawler database"
   type        = string
@@ -52,6 +54,7 @@ variable "trigger_name" {
   type        = string
 }
 
+# AWS Lambda 
 variable "function_name" {
   description = "Name of lambda handler"
   type        = string
@@ -67,6 +70,7 @@ variable "filepath" {
   type        = string
 }
 
+# AWS Athena 
 variable "athena_workgroup" {
   description = "Athena workgroup name"
   type        = string
@@ -84,5 +88,26 @@ variable "athena_named_query" {
 
 variable "query_location" {
   description = "Athena named query location"
+  type        = string
+}
+
+# AWS Quicksight 
+variable "account_name" {
+  description = "Aws Quicksight account name"
+  type        = string
+}
+
+variable "authentication_method" {
+  description = "Quicksight authentication method"
+  type        = string
+}
+
+variable "edition" {
+  description = "User preferred Quicksight edition"
+  type        = string
+}
+
+variable "notification_email" {
+  description = "Quicksight registered email for notification"
   type        = string
 }
