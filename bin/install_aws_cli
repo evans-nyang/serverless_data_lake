@@ -2,8 +2,6 @@
 
 cd /workspaces/serverless_data_lake
 
-cd /workspaces/data-engineering-zoomcamp
-
 rm -f "/workspace/awscliv2.zip"
 rm -rf "/workspace/aws"
 
